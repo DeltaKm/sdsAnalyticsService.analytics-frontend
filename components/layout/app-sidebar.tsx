@@ -34,6 +34,8 @@ const navItems = [
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const isEmbedRoute = pathname?.startsWith("/dashboard");
+  const withBase = (href: string) => (isEmbedRoute ? `/dashboard${href}` : href);
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
@@ -41,7 +43,7 @@ export function AppSidebar() {
     <div className="hidden border-r bg-card md:block">
       <div className="flex h-full max-h-screen flex-col">
         <div className="flex h-16 items-center border-b px-6">
-          <Link href="/overview" className="flex items-center gap-3 font-bold text-lg">
+          <Link href={withBase("/overview")} className="flex items-center gap-3 font-bold text-lg">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <LayoutDashboard className="h-5 w-5" />
             </div>
@@ -51,7 +53,8 @@ export function AppSidebar() {
         <div className="flex-1 overflow-auto py-4">
           <nav className="grid gap-1 px-3">
             {navItems.map((item) => {
-              const isActive = pathname === item.href;
+              const targetHref = withBase(item.href);
+              const isActive = pathname === targetHref;
               const isOverview = item.href === "/overview";
               const Icon = item.icon;
 
@@ -113,16 +116,19 @@ export function AppSidebar() {
 
               if (isOverview) {
                 return (
-                  <Link key={item.href} href={item.href} {...sharedProps}>
+                  <Link key={item.href} href={targetHref} {...sharedProps}>
                     {content}
                   </Link>
                 );
               }
 
               return (
-                <div key={item.href} {...sharedProps} aria-disabled="true" role="link" tabIndex={-1}>
+                <Link
+                  key={item.href}
+                  href={targetHref}
+                  {...sharedProps} aria-disabled="true" role="link" tabIndex={-1}>
                   {content}
-                </div>
+                </Link>
               );
             })}
             <div className="border-t mt-2 pt-2">

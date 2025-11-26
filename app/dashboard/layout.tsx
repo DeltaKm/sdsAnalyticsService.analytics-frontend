@@ -18,7 +18,7 @@ export default async function DashboardLayout({ children }: Props) {
   if (!session) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-slate-950 text-slate-100">
-        <div className="max-w-md text-center space-y-4">
+        <div className="max-w-md space-y-4 text-center">
           <h1 className="text-3xl font-semibold tracking-tight">Unauthorized</h1>
           <p className="text-slate-300">
             Accesso alla dashboard non autorizzato. Richiedi un nuovo link di embed valido e riprova.
