@@ -1,7 +1,7 @@
 import { mockOverviewData, mockSalesData, mockCatalogData, mockChannelsData, mockOperatorsData } from "./mock-data";
 
 const BASE = process.env.NEXT_PUBLIC_API_BASE_URL!;
-const USE_MOCK = true;
+const USE_MOCK = false;
 
 export async function apiGet<T>(path: string, params: Record<string, any>): Promise<T> {
   if (USE_MOCK) {

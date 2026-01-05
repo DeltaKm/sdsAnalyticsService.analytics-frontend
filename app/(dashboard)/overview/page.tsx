@@ -22,6 +22,10 @@ import { TRPCClientError } from "@trpc/client";
 import { Loader2 } from "lucide-react";
 import { useDashboardFilters } from "@/hooks/use-dashboard-filters";
 
+const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+const DEMO_DEFAULT_FROM = process.env.NEXT_PUBLIC_DEMO_DEFAULT_FROM ?? "";
+const DEMO_DEFAULT_TO = process.env.NEXT_PUBLIC_DEMO_DEFAULT_TO ?? "";
+
 export default function OverviewPage() {
   return (
     <Suspense fallback={<OverviewFallback />}>
@@ -111,6 +115,16 @@ function OverviewContent() {
 
   useEffect(() => {
     if (filters.from && filters.to) return;
+
+    if (DEMO_MODE && DEMO_DEFAULT_FROM && DEMO_DEFAULT_TO) {
+      setFilters({
+        from: DEMO_DEFAULT_FROM,
+        to: DEMO_DEFAULT_TO,
+        stores: [],
+      });
+      return;
+    }
+
     const end = new Date();
     const start = new Date();
     start.setDate(start.getDate() - 30);
@@ -156,6 +170,13 @@ function OverviewContent() {
 
   const handleClear = () => {
     clearFilters();
+    if (DEMO_MODE && DEMO_DEFAULT_FROM && DEMO_DEFAULT_TO) {
+      setFilters({
+        from: DEMO_DEFAULT_FROM,
+        to: DEMO_DEFAULT_TO,
+        stores: [],
+      });
+    }
     refetch();
   };
 
@@ -177,7 +198,7 @@ function OverviewContent() {
   return (
     <div className="space-y-6">
       <SectionHeader title="Panoramica">
-        <FiltersPanel onApply={handleApply} onClear={handleClear} disabled />
+        <FiltersPanel onApply={handleApply} onClear={handleClear} disabled={DEMO_MODE} />
         <CsvExport data={data?.table.rows || []} filename="overview.csv" disabled />
         <PrintButton disabled />
       </SectionHeader>

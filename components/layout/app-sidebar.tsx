@@ -114,19 +114,21 @@ export function AppSidebar() {
                 </>
               );
 
-              if (isOverview) {
-                return (
-                  <Link key={item.href} href={targetHref} {...sharedProps}>
-                    {content}
-                  </Link>
-                );
-              }
-
               return (
                 <Link
                   key={item.href}
                   href={targetHref}
-                  {...sharedProps} aria-disabled="true" role="link" tabIndex={-1}>
+                  {...sharedProps}
+                  aria-disabled={!isOverview}
+                  role={isOverview ? "link" : "presentation"}
+                  tabIndex={isOverview ? 0 : -1}
+                  onClick={(event) => {
+                    if (!isOverview) {
+                      event.preventDefault();
+                      event.stopPropagation();
+                    }
+                  }}
+                >
                   {content}
                 </Link>
               );
