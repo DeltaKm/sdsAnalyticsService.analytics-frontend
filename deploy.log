@@ -1,171 +1,262 @@
 ==== DEPLOY FRONTEND INIZIATO ====
-Data: Mon Nov 24 21:40:22 CET 2025
-Nuova versione: v1.0.5
-Build Docker...
-#0 building with "desktop-linux" instance using docker driver
+Data: Wed Nov 26 02:27:24 CET 2025
+Nuova versione: v1.0.8
+Cloud Build: build & push immagine...
+Creating temporary archive of 95 file(s) totalling 475.7 KiB before compression.
+Some files were not included in the source upload.
 
-#1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 1.13kB done
-#1 DONE 0.0s
+Check the gcloud log [/Users/claudiomartinez/.config/gcloud/logs/2025.11.26/02.27.25.345690.log] to see which files and the contents of the
+default gcloudignore file used (see `$ gcloud topic gcloudignore` to learn
+more).
 
-#2 [internal] load metadata for docker.io/library/node:20-alpine
-#2 DONE 5.1s
+Uploading tarball of [.] to [gs://sdsanalyticsservice_cloudbuild/source/1764120445.458953-4f87d4da2bab478a9308e5d55050aed9.tgz]
+Created [https://cloudbuild.googleapis.com/v1/projects/sdsanalyticsservice/locations/global/builds/fcfe5b9d-ea01-4560-85ae-8501972ac4cb].
+Logs are available at [ https://console.cloud.google.com/cloud-build/builds/fcfe5b9d-ea01-4560-85ae-8501972ac4cb?project=542854471096 ].
+Waiting for build to complete. Polling interval: 1 second(s).
+----------------------------------- REMOTE BUILD OUTPUT -----------------------------------
+starting build "fcfe5b9d-ea01-4560-85ae-8501972ac4cb"
 
-#3 [internal] load .dockerignore
-#3 transferring context: 94B done
-#3 DONE 0.0s
-
-#4 [builder 1/7] FROM docker.io/library/node:20-alpine@sha256:6178e78b972f79c335df281f4b7674a2d85071aae2af020ffa39f0a770265435
-#4 resolve docker.io/library/node:20-alpine@sha256:6178e78b972f79c335df281f4b7674a2d85071aae2af020ffa39f0a770265435 done
-#4 DONE 0.0s
-
-#5 [internal] load build context
-#5 transferring context: 317.43kB 0.0s done
-#5 DONE 0.0s
-
-#6 [builder 2/7] WORKDIR /app
-#6 CACHED
-
-#7 [builder 3/7] RUN apk add --no-cache libc6-compat
-#7 CACHED
-
-#8 [builder 4/7] COPY package*.json ./
-#8 CACHED
-
-#9 [builder 5/7] RUN npm install
-#9 CACHED
-
-#10 [builder 6/7] COPY . .
-#10 DONE 0.0s
-
-#11 [builder 7/7] RUN npm run build
-#11 0.775 
-#11 0.775 > analytics-frontend@0.1.0 build
-#11 0.775 > next build --turbopack
-#11 0.775 
-#11 2.519 Attention: Next.js now collects completely anonymous telemetry regarding usage.
-#11 2.519 This information is used to shape Next.js' roadmap and prioritize features.
-#11 2.519 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
-#11 2.519 https://nextjs.org/telemetry
-#11 2.519 
-#11 2.613    ▲ Next.js 15.5.6 (Turbopack)
-#11 2.613    - Environments: .env.local
-#11 2.615    - Experiments (use with caution):
-#11 2.615      · serverActions
-#11 2.615 
-#11 2.754    Creating an optimized production build ...
-#11 29.73  ✓ Finished writing to disk in 31ms
-#11 29.79  ✓ Compiled successfully in 25.7s
-#11 29.81    Linting and checking validity of types ...
-#11 35.04 
-#11 35.04 ./app/(dashboard)/layout.tsx
-#11 35.04 8:10  Warning: 'ThemeToggle' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 
-#11 35.04 ./app/(dashboard)/overview/page.tsx
-#11 35.04 17:15  Warning: 'AnalyticsResponse' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 
-#11 35.04 ./app/(dashboard)/sales/page.tsx
-#11 35.04 52:9  Warning: 'router' is assigned a value but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 
-#11 35.04 ./components/filters/filters-panel.tsx
-#11 35.04 6:10  Warning: 'Card' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 6:16  Warning: 'CardContent' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 6:29  Warning: 'CardHeader' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 6:41  Warning: 'CardTitle' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 7:10  Warning: 'Sheet' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 7:17  Warning: 'SheetContent' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 7:31  Warning: 'SheetHeader' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 7:44  Warning: 'SheetTitle' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 7:56  Warning: 'SheetTrigger' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 
-#11 35.04 ./components/layout/app-sidebar.tsx
-#11 35.04 6:10  Warning: 'cn' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 8:10  Warning: 'Separator' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 20:3  Warning: 'ChevronRight' is defined but never used.  @typescript-eslint/no-unused-vars
-#11 35.04 
-#11 35.04 info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/app/api-reference/config/eslint#disabling-rules
-#11 43.01    Collecting page data ...
-#11 45.26    Generating static pages (0/15) ...
-#11 46.92    Generating static pages (3/15) 
-#11 46.92    Generating static pages (7/15) 
-#11 47.08    Generating static pages (11/15) 
-#11 47.08  ✓ Generating static pages (15/15)
-#11 47.73    Finalizing page optimization ...
-#11 47.73    Collecting build traces ...
-#11 79.95 
-#11 79.95 Route (app)                         Size  First Load JS
-#11 79.95 ┌ ○ /                                0 B         115 kB
-#11 79.95 ├ ○ /_not-found                      0 B         115 kB
-#11 79.95 ├ ○ /advanced-report             3.16 kB         227 kB
-#11 79.95 ├ ƒ /api/health                      0 B            0 B
-#11 79.95 ├ ƒ /api/trpc/[trpc]                 0 B            0 B
-#11 79.95 ├ ○ /catalog                     7.41 kB         340 kB
-#11 79.95 ├ ○ /channels                    2.62 kB         335 kB
-#11 79.95 ├ ○ /customers                   2.25 kB         226 kB
-#11 79.95 ├ ○ /devices                     2.62 kB         335 kB
-#11 79.95 ├ ○ /operators                   7.41 kB         340 kB
-#11 79.95 ├ ○ /overview                    7.59 kB         340 kB
-#11 79.95 ├ ○ /sales                       7.71 kB         340 kB
-#11 79.95 └ ○ /time-slots                   121 kB         345 kB
-#11 79.95 + First Load JS shared by all     122 kB
-#11 79.95   ├ chunks/1157cb2e3ce5426a.js   11.9 kB
-#11 79.95   ├ chunks/2468949c4832742b.js   59.2 kB
-#11 79.95   ├ chunks/75a3f12660976f11.js     13 kB
-#11 79.95   ├ chunks/ad485e1ef0aa584e.js   17.2 kB
-#11 79.95   └ other shared chunks (total)  20.8 kB
-#11 79.95 
-#11 79.95 
-#11 79.95 ○  (Static)   prerendered as static content
-#11 79.95 ƒ  (Dynamic)  server-rendered on demand
-#11 79.95 
-#11 DONE 80.2s
-
-#12 [runner 3/7] COPY package*.json ./
-#12 CACHED
-
-#13 [runner 4/7] RUN npm install --omit=dev
-#13 CACHED
-
-#14 [runner 5/7] COPY --from=builder /app/.next/standalone ./
-#14 DONE 0.5s
-
-#15 [runner 6/7] COPY --from=builder /app/.next/static ./.next/static
-#15 DONE 0.1s
-
-#16 [runner 7/7] COPY --from=builder /app/public ./public
-#16 DONE 0.0s
-
-#17 exporting to image
-#17 exporting layers
-#17 exporting layers 2.2s done
-#17 exporting manifest sha256:4d9db8984d646cd92407b9410ae6f1ca9b839e175f1cbdebc5db1d46a0b915bd done
-#17 exporting config sha256:b2f55a6743d36827ff50a212072653afe980d0c3b03db1a4bb8ff5238aa6872a done
-#17 exporting attestation manifest sha256:48beb29ffcde1e342cad5a4102ceaac2b908989088c7e61c605796e53dc3f3e4 done
-#17 exporting manifest list sha256:0c76321acb833fb4ea2aa038821fc0d2673a2d233e8e87bafea1ee656a274cee done
-#17 naming to europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.0.5 done
-#17 DONE 2.2s
-
-View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/y03nyz4u7jwca5yic0errybcl
-Push immagine...
+FETCHSOURCE
+Fetching storage object: gs://sdsanalyticsservice_cloudbuild/source/1764120445.458953-4f87d4da2bab478a9308e5d55050aed9.tgz#1764120447759610
+Copying gs://sdsanalyticsservice_cloudbuild/source/1764120445.458953-4f87d4da2bab478a9308e5d55050aed9.tgz#1764120447759610...
+/ [0 files][    0.0 B/108.8 KiB]                                                / [1 files][108.8 KiB/108.8 KiB]                                                
+Operation completed over 1 objects/108.8 KiB.                                    
+BUILD
+Starting Step #0
+Step #0: Already have image (with digest): gcr.io/cloud-builders/docker
+Step #0: Sending build context to Docker daemon  578.6kB
+Step #0: Step 1/18 : FROM node:20-alpine AS builder
+Step #0: 20-alpine: Pulling from library/node
+Step #0: 2d35ebdb57d9: Already exists
+Step #0: 537c6f956080: Pulling fs layer
+Step #0: d31fb19c9d76: Pulling fs layer
+Step #0: d4cda882e05a: Pulling fs layer
+Step #0: d31fb19c9d76: Verifying Checksum
+Step #0: d31fb19c9d76: Download complete
+Step #0: d4cda882e05a: Verifying Checksum
+Step #0: d4cda882e05a: Download complete
+Step #0: 537c6f956080: Verifying Checksum
+Step #0: 537c6f956080: Download complete
+Step #0: 537c6f956080: Pull complete
+Step #0: d31fb19c9d76: Pull complete
+Step #0: d4cda882e05a: Pull complete
+Step #0: Digest: sha256:16858294071a56ffd4cce9f17b57136cc39e41507b40e245b4f8e906f7a19463
+Step #0: Status: Downloaded newer image for node:20-alpine
+Step #0:  ---> 6fd15b1a333d
+Step #0: Step 2/18 : WORKDIR /app
+Step #0:  ---> Running in 7f9a847641ef
+Step #0: Removing intermediate container 7f9a847641ef
+Step #0:  ---> 6fe37774a22f
+Step #0: Step 3/18 : RUN apk add --no-cache libc6-compat
+Step #0:  ---> Running in e333c18c474e
+Step #0: fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/main/x86_64/APKINDEX.tar.gz
+Step #0: fetch https://dl-cdn.alpinelinux.org/alpine/v3.22/community/x86_64/APKINDEX.tar.gz
+Step #0: (1/3) Installing musl-obstack (1.2.3-r2)
+Step #0: (2/3) Installing libucontext (1.3.2-r0)
+Step #0: (3/3) Installing gcompat (1.1.0-r4)
+Step #0: OK: 10 MiB in 21 packages
+Step #0: Removing intermediate container e333c18c474e
+Step #0:  ---> 89b93797a2f0
+Step #0: Step 4/18 : COPY package*.json ./
+Step #0:  ---> d770b10fa9a0
+Step #0: Step 5/18 : RUN npm install
+Step #0:  ---> Running in 31be40331a67
+Step #0: 
+Step #0: added 452 packages, and audited 453 packages in 25s
+Step #0: 
+Step #0: 153 packages are looking for funding
+Step #0:   run `npm fund` for details
+Step #0: 
+Step #0: 1 moderate severity vulnerability
+Step #0: 
+Step #0: To address all issues, run:
+Step #0:   npm audit fix
+Step #0: 
+Step #0: Run `npm audit` for details.
+Step #0: [91mnpm notice
+Step #0: npm notice New major version of npm available! 10.8.2 -> 11.6.4
+Step #0: npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.4
+Step #0: npm notice To update run: npm install -g npm@11.6.4
+Step #0: npm notice
+Step #0: [0mRemoving intermediate container 31be40331a67
+Step #0:  ---> d7c617fb8a39
+Step #0: Step 6/18 : COPY . .
+Step #0:  ---> 3013cd143ba2
+Step #0: Step 7/18 : RUN npm run build
+Step #0:  ---> Running in 15d5db38d03b
+Step #0: 
+Step #0: > analytics-frontend@0.1.0 build
+Step #0: > next build --turbopack
+Step #0:
+Step #0: Attention: Next.js now collects completely anonymous telemetry regarding usage.
+Step #0: This information is used to shape Next.js' roadmap and prioritize features.
+Step #0: You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+Step #0: https://nextjs.org/telemetry
+Step #0: 
+Step #0:    ▲ Next.js 15.5.6 (Turbopack)
+Step #0:    - Experiments (use with caution):
+Step #0:      · serverActions
+Step #0: 
+Step #0:    Creating an optimized production build ...
+Step #0:  ✓ Finished writing to disk in 61ms
+Step #0:  ✓ Compiled successfully in 45s
+Step #0:    Linting and checking validity of types ...
+Step #0:    Collecting page data ...
+Step #0:    Generating static pages (0/8) ...
+Step #0:    Generating static pages (2/8) 
+Step #0:    Generating static pages (4/8) 
+Step #0:    Generating static pages (6/8) 
+Step #0:  ✓ Generating static pages (8/8)
+Step #0:    Finalizing page optimization ...
+Step #0:    Collecting build traces ...
+Step #0: 
+Step #0: Route (app)                         Size  First Load JS
+Step #0: ┌ ○ /                                0 B         115 kB
+Step #0: ├ ○ /_not-found                      0 B         115 kB
+Step #0: ├ ƒ /advanced-report             3.16 kB         227 kB
+Step #0: ├ ƒ /api/generate-embed-token        0 B            0 B
+Step #0: ├ ƒ /api/health                      0 B            0 B
+Step #0: ├ ƒ /api/trpc/[trpc]                 0 B            0 B
+Step #0: ├ ƒ /catalog                     7.41 kB         340 kB
+Step #0: ├ ƒ /channels                    2.62 kB         335 kB
+Step #0: ├ ƒ /customers                   2.25 kB         226 kB
+Step #0: ├ ƒ /dashboard                       0 B         340 kB
+Step #0: ├ ƒ /dashboard/overview              0 B         340 kB
+Step #0: ├ ƒ /devices                     2.62 kB         335 kB
+Step #0: ├ ○ /embed                         266 B         115 kB
+Step #0: ├ ƒ /operators                   7.41 kB         340 kB
+Step #0: ├ ƒ /overview                        0 B         340 kB
+Step #0: ├ ƒ /sales                       7.72 kB         340 kB
+Step #0: └ ƒ /time-slots                   121 kB         345 kB
+Step #0: + First Load JS shared by all     123 kB
+Step #0:   ├ chunks/2468949c4832742b.js   59.2 kB
+Step #0:   ├ chunks/5a50ee1d1bd5f6b0.js   10.9 kB
+Step #0:   ├ chunks/75a3f12660976f11.js     13 kB
+Step #0:   ├ chunks/c490e204b33dc39d.js   17.2 kB
+Step #0:   └ other shared chunks (total)  22.4 kB
+Step #0: 
+Step #0: 
+Step #0: ƒ Middleware                     44.3 kB
+Step #0: 
+Step #0: ○  (Static)   prerendered as static content
+Step #0: ƒ  (Dynamic)  server-rendered on demand
+Step #0:
+Step #0: Removing intermediate container 15d5db38d03b
+Step #0:  ---> 408d0edf60ed
+Step #0: Step 8/18 : FROM node:20-alpine AS runner
+Step #0:  ---> 6fd15b1a333d
+Step #0: Step 9/18 : WORKDIR /app
+Step #0:  ---> Using cache
+Step #0:  ---> 6fe37774a22f
+Step #0: Step 10/18 : ENV NODE_ENV=production
+Step #0:  ---> Running in 8d83ca0e4195
+Step #0: Removing intermediate container 8d83ca0e4195
+Step #0:  ---> 84cc153e4f4a
+Step #0: Step 11/18 : ENV PORT=8080
+Step #0:  ---> Running in 760438ca02fa
+Step #0: Removing intermediate container 760438ca02fa
+Step #0:  ---> 13fe7ff79e16
+Step #0: Step 12/18 : COPY package*.json ./
+Step #0:  ---> d7c608467815
+Step #0: Step 13/18 : RUN npm install --omit=dev
+Step #0:  ---> Running in 5514d237378a
+Step #0: 
+Step #0: added 149 packages, and audited 150 packages in 19s
+Step #0: 
+Step #0: 22 packages are looking for funding
+Step #0:   run `npm fund` for details
+Step #0: 
+Step #0: found 0 vulnerabilities
+Step #0: [91mnpm notice
+Step #0: npm notice New major version of npm available! 10.8.2 -> 11.6.4
+Step #0: npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.6.4
+Step #0: npm notice To update run: npm install -g npm@11.6.4
+Step #0: npm notice
+Step #0: [0mRemoving intermediate container 5514d237378a
+Step #0:  ---> 03ff3f2d3a75
+Step #0: Step 14/18 : COPY --from=builder /app/.next/standalone ./
+Step #0:  ---> 718762a385bc
+Step #0: Step 15/18 : COPY --from=builder /app/.next/static ./.next/static
+Step #0:  ---> 2994d2971e9c
+Step #0: Step 16/18 : COPY --from=builder /app/public ./public
+Step #0:  ---> ba46f6f1f503
+Step #0: Step 17/18 : EXPOSE 8080
+Step #0:  ---> Running in ffaa06256397
+Step #0: Removing intermediate container ffaa06256397
+Step #0:  ---> 9b089a10c2fa
+Step #0: Step 18/18 : CMD ["node", "server.js"]
+Step #0:  ---> Running in abaa98a33bbc
+Step #0: Removing intermediate container abaa98a33bbc
+Step #0:  ---> 31b2db64d3a9
+Step #0: Successfully built 31b2db64d3a9
+Step #0: Successfully tagged europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.0.8
+Finished Step #0
+Starting Step #1
+Step #1: Already have image (with digest): gcr.io/cloud-builders/docker
+Step #1: The push refers to repository [europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend]
+Step #1: 5be6687c6833: Preparing
+Step #1: 01ef45151894: Preparing
+Step #1: 024a2fc2ce69: Preparing
+Step #1: 195d1c38a9bc: Preparing
+Step #1: 718f3a859c1d: Preparing
+Step #1: 847580745773: Preparing
+Step #1: b0643b6f6505: Preparing
+Step #1: fbeab92e8a42: Preparing
+Step #1: 6acabb04a1c3: Preparing
+Step #1: 256f393e029f: Preparing
+Step #1: 256f393e029f: Layer already exists
+Step #1: 718f3a859c1d: Pushed
+Step #1: 01ef45151894: Pushed
+Step #1: 847580745773: Pushed
+Step #1: 5be6687c6833: Pushed
+Step #1: b0643b6f6505: Pushed
+Step #1: fbeab92e8a42: Pushed
+Step #1: 024a2fc2ce69: Pushed
+Step #1: 6acabb04a1c3: Pushed
+Step #1: 195d1c38a9bc: Pushed
+Step #1: v1.0.8: digest: sha256:99c18559f17bd11da9246c0d09256ded7b7846aef7d8a8e9a35995a562d69161 size: 2417
+Finished Step #1
+PUSH
+Pushing europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.0.8
 The push refers to repository [europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend]
-995ed5b81704: Pushed
-43a1e10084f1: Pushed
-287bd192759e: Pushed
-a1d457119144: Pushed
-v1.0.5: digest: sha256:0c76321acb833fb4ea2aa038821fc0d2673a2d233e8e87bafea1ee656a274cee size: 856
-Old revision: analytics-frontend-00004-55j
+5be6687c6833: Preparing
+01ef45151894: Preparing
+024a2fc2ce69: Preparing
+195d1c38a9bc: Preparing
+718f3a859c1d: Preparing
+847580745773: Preparing
+b0643b6f6505: Preparing
+fbeab92e8a42: Preparing
+6acabb04a1c3: Preparing
+256f393e029f: Preparing
+01ef45151894: Layer already exists
+847580745773: Layer already exists
+fbeab92e8a42: Layer already exists
+5be6687c6833: Layer already exists
+195d1c38a9bc: Layer already exists
+024a2fc2ce69: Layer already exists
+6acabb04a1c3: Layer already exists
+718f3a859c1d: Layer already exists
+b0643b6f6505: Layer already exists
+256f393e029f: Layer already exists
+v1.0.8: digest: sha256:99c18559f17bd11da9246c0d09256ded7b7846aef7d8a8e9a35995a562d69161 size: 2417
+DONE
+-------------------------------------------------------------------------------------------
+ID                                    CREATE_TIME                DURATION  SOURCE                                                                                             IMAGES                                                                                   STATUS
+fcfe5b9d-ea01-4560-85ae-8501972ac4cb  2025-11-26T01:27:28+00:00  4M33S     gs://sdsanalyticsservice_cloudbuild/source/1764120445.458953-4f87d4da2bab478a9308e5d55050aed9.tgz  europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.0.8  SUCCESS
+Old revision: analytics-frontend-00006-vc4
 Deploy Cloud Run...
 Deploying container to Cloud Run service [[1manalytics-frontend[m] in project [[1msdsanalyticsservice[m] region [[1meurope-west1[m]
 Deploying...
-Setting IAM Policy...............done
-Creating Revision................................................................................done
+Setting IAM Policy..................done
+Creating Revision..............................................................................................................................................................................................................................................................................................................................................................................done
 Routing traffic.....done
 Done.
-Service [[1manalytics-frontend[m] revision [[1manalytics-frontend-00006-vc4[m] has been deployed and is serving [1m100[m percent of traffic.
+Service [[1manalytics-frontend[m] revision [[1manalytics-frontend-00007-rxc[m] has been deployed and is serving [1m100[m percent of traffic.
 Service URL: [1mhttps://analytics-frontend-542854471096.europe-west1.run.app[m
 Health check...
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0100    15    0    15    0     0     10      0 --:--:--  0:00:01 --:--:--    10
-{"status":"ok"}Frontend deploy completato: analytics-frontend (v1.0.5)
-Fine deploy frontend v1.0.5
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0100    15    0    15    0     0     10      0 --:--:--  0:00:01 --:--:--    10
+{"status":"ok"}cluster-analytics-frontend deploy completato - add jwt flow && iframe embed session handling (durata: 5m47s)
+Fine deploy frontend v1.0.8

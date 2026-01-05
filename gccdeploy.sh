@@ -10,6 +10,9 @@ SERVICE="analytics-frontend"
 VERSION_FILE="./.version"
 LOGFILE="./deploy.log"
 
+DETAILS_URL_DEFAULT="https://console.cloud.google.com/run/detail/$REGION/$SERVICE?project=$PROJECT_ID"
+DETAILS_URL="${DEPLOY_DETAILS_URL:-$DETAILS_URL_DEFAULT}"
+
 # Carico variabili dal file .env
 TELEGRAM_CHAT_ID=$(grep "^TELEGRAM_CHAT_ID=" .env | cut -d '=' -f2-)
 TELEGRAM_BOT_TOKEN=$(grep "^TELEGRAM_BOT_TOKEN=" .env | cut -d '=' -f2-)
@@ -48,6 +51,8 @@ IFS='.' read MAJOR MINOR PATCH <<< "$VERSION"
 
 COMMITS=$(git log -n 20 --pretty=format:"%s")
 LATEST_COMMIT=$(git log -1 --pretty=format:"%s")
+LATEST_COMMIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo "unknown")
+CURRENT_REF=$(git symbolic-ref HEAD 2>/dev/null || git rev-parse HEAD 2>/dev/null || echo "HEAD")
 
 if [ -z "$LATEST_COMMIT" ]; then
   LATEST_COMMIT="commit sconosciuto"
@@ -73,42 +78,22 @@ echo "Nuova versione: $TAG" | tee -a $LOGFILE
 IMAGE="europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO/$SERVICE:$TAG"
 
 # ==============================
-# BUILD DOCKER
+# CLOUD BUILD (build + push)
 # ==============================
-echo "Build Docker..." | tee -a $LOGFILE
-docker build --platform linux/amd64 \
-  -t $IMAGE . 2>&1 | tee -a $LOGFILE
+echo "Cloud Build: build & push immagine..." | tee -a $LOGFILE
+gcloud builds submit \
+  --config cloudbuild.yaml \
+  --substitutions=_IMAGE=$IMAGE \
+  . 2>&1 | tee -a $LOGFILE
 
-BUILD_EXIT=${pipestatus[1]:-0}
+CLOUD_BUILD_EXIT=${pipestatus[1]:-0}
 
-if [ $BUILD_EXIT -ne 0 ]; then
-  MSG="ERRORE: build Docker fallita per $SERVICE ($TAG)"
+if [ $CLOUD_BUILD_EXIT -ne 0 ]; then
+  MSG="ERRORE: cloud build fallita per $SERVICE"
   echo $MSG | tee -a $LOGFILE
   curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
-    -d chat_id="$TELEGRAM_CHAT_ID" -d text="$MSG"
-  exit 1
-fi
-
-# ==============================
-# PUSH SU ARTIFACT REGISTRY (pulito)
-# ==============================
-echo "Push immagine..." | tee -a $LOGFILE
-
-docker push $IMAGE 2>&1 \
-  | grep -v "Waiting" \
-  | grep -v "Preparing" \
-  | grep -v "Layer" \
-  | tee -a $LOGFILE
-
-PUSH_EXIT=${pipestatus[1]:-0}
-
-if [ $PUSH_EXIT -ne 0 ]; then
-  MSG="ERRORE: push fallito per $SERVICE ($TAG)"
-  echo $MSG | tee -a $LOGFILE
-
-  curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
-    -d chat_id="$TELEGRAM_CHAT_ID" -d text="$MSG"
-
+    --data-urlencode chat_id="$TELEGRAM_CHAT_ID" \
+    --data-urlencode text="$MSG"
   exit 1
 fi
 
@@ -135,11 +120,12 @@ gcloud run deploy $SERVICE \
 DEPLOY_EXIT=${pipestatus[1]:-0}
 
 if [ $DEPLOY_EXIT -ne 0 ]; then
-  MSG="ERRORE: deploy fallito per $SERVICE ($TAG)"
+  MSG="ERRORE: deploy fallito per $SERVICE"
   echo $MSG | tee -a $LOGFILE
 
   curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
-    -d chat_id="$TELEGRAM_CHAT_ID" -d text="$MSG"
+    --data-urlencode chat_id="$TELEGRAM_CHAT_ID" \
+    --data-urlencode text="$MSG"
 
   if [ -n "$OLD_REVISION" ]; then
     gcloud run services update-traffic $SERVICE \
@@ -161,11 +147,12 @@ curl -f "$URL/api/health" 2>&1 | tee -a $LOGFILE
 HC_EXIT=${pipestatus[1]:-0}
 
 if [ $HC_EXIT -ne 0 ]; then
-  MSG="ERRORE: health check fallito ($TAG). Rollback eseguito."
+  MSG="ERRORE: health check fallito. Rollback eseguito."
   echo $MSG | tee -a $LOGFILE
 
   curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
-    -d chat_id="$TELEGRAM_CHAT_ID" -d text="$MSG"
+    --data-urlencode chat_id="$TELEGRAM_CHAT_ID" \
+    --data-urlencode text="$MSG"
 
   if [ -n "$OLD_REVISION" ]; then
     gcloud run services update-traffic $SERVICE \
@@ -182,16 +169,20 @@ END_TIME=$(date +%s)
 ELAPSED=$(( END_TIME - START_TIME ))
 DURATION=$(format_duration $ELAPSED)
 
-MSG="cluster-$SERVICE deploy completato - $LATEST_COMMIT (durata: $DURATION)"
-echo $MSG | tee -a $LOGFILE
+SUCCESS_MSG=$(cat <<EOF
+[SUCCESS] Deploy $SERVICE riuscito
+Ref: $CURRENT_REF
+Commit: $LATEST_COMMIT_HASH - $LATEST_COMMIT
+Immagine: $IMAGE
+Durata: $DURATION
+Dettagli: $DETAILS_URL
+EOF
+)
+
+echo "$SUCCESS_MSG" | tee -a $LOGFILE
 
 curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
-  -d chat_id="$TELEGRAM_CHAT_ID" -d text="$MSG"
-
-# INVIO LOG
-curl -s -F document=@$LOGFILE \
-  "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendDocument" \
-  -F chat_id="$TELEGRAM_CHAT_ID" \
-  -F caption="Log deploy $SERVICE"
+  --data-urlencode chat_id="$TELEGRAM_CHAT_ID" \
+  --data-urlencode text="$SUCCESS_MSG"
 
 echo "Fine deploy frontend $TAG" | tee -a $LOGFILE
