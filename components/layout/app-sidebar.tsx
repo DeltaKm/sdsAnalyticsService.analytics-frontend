@@ -118,6 +118,7 @@ export function AppSidebar() {
                 <Link
                   key={item.href}
                   href={targetHref}
+                  prefetch={isOverview}
                   {...sharedProps}
                   aria-disabled={!isOverview}
                   role={isOverview ? "link" : "presentation"}
