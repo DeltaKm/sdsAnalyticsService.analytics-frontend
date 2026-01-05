@@ -6,6 +6,7 @@ import { httpBatchLink } from "@trpc/client";
 import { trpc } from "@/lib/trpc/client";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import { MobileNav } from "@/components/layout/mobile-nav";
 
 export function DashboardShell({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -33,6 +34,12 @@ export function DashboardShell({ children }: { children: React.ReactNode }) {
           <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
             <AppSidebar />
             <div className="flex flex-col">
+              <header className="sticky top-0 z-40 flex h-14 items-center gap-4 border-b bg-[hsl(var(--card))] text-[hsl(var(--card-foreground))] px-4 lg:h-[60px] lg:px-6 md:hidden shadow-md bg-opacity-100">
+                <MobileNav />
+                <div className="w-full flex-1">
+                  <span className="font-semibold">Analytics</span>
+                </div>
+              </header>
               <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">{children}</main>
             </div>
           </div>

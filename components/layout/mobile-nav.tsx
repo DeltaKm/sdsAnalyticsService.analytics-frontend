@@ -1,11 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import {
+  Menu,
   LayoutDashboard,
   ShoppingCart,
   Package,
@@ -14,8 +17,7 @@ import {
   Monitor,
   Clock,
   UserCheck,
-  FileText,
-  ChevronRight,
+  FileText
 } from "lucide-react";
 
 const navItems = [
@@ -30,24 +32,45 @@ const navItems = [
   { href: "/advanced-report", label: "Report Avanzato", icon: FileText },
 ];
 
-export function AppSidebar() {
+export function MobileNav() {
+  const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const isEmbedRoute = pathname?.startsWith("/dashboard");
   const withBase = (href: string) => (isEmbedRoute ? `/dashboard${href}` : href);
 
   return (
-    <div className="hidden border-r bg-card md:block md:sticky md:top-0 md:h-screen">
-      <div className="flex h-full flex-col overflow-y-auto">
-        <div className="flex h-16 items-center border-b px-6">
-          <Link href={withBase("/overview")} className="flex items-center gap-3 font-bold text-lg">
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+        >
+          <Menu className="h-6 w-6" />
+          <span className="sr-only">Toggle Menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent
+        side="left"
+        className="pr-0 bg-[hsl(var(--card))] text-[hsl(var(--card-foreground))] border-r border-border shadow-lg"
+      >
+        <SheetTitle className="sr-only">Menu di Navigazione</SheetTitle>
+        <SheetDescription className="sr-only">
+          Menu principale per la navigazione tra le diverse sezioni della dashboard analytics.
+        </SheetDescription>
+        <div className="px-7">
+          <Link
+            href={withBase("/overview")}
+            className="flex items-center gap-3 font-bold text-lg"
+            onClick={() => setOpen(false)}
+          >
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <LayoutDashboard className="h-5 w-5" />
             </div>
             <span>Analytics</span>
           </Link>
         </div>
-        <div className="flex-1 overflow-auto py-4">
-          <nav className="grid gap-1 px-3">
+        <div className="flex flex-col gap-4 py-4 mt-4">
+          <nav className="grid gap-1 px-2">
             {navItems.map((item) => {
               const targetHref = withBase(item.href);
               const isActive = pathname === targetHref;
@@ -67,27 +90,29 @@ export function AppSidebar() {
                       : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-[#7c3aed] dark:hover:text-white",
                     !isOverview && !isActive && "hover:bg-transparent hover:text-slate-600 dark:hover:bg-transparent dark:hover:text-slate-400"
                   )}
-                  aria-disabled={!isOverview}
-                  role={isOverview ? "link" : "presentation"}
-                  tabIndex={isOverview ? 0 : -1}
-                  onClick={(event) => {
+                  onClick={(e) => {
                     if (!isOverview) {
-                      event.preventDefault();
-                      event.stopPropagation();
+                      e.preventDefault();
+                      e.stopPropagation();
+                      return;
                     }
+                    setOpen(false);
                   }}
+                  role={isOverview ? "link" : "presentation"}
+                  aria-disabled={!isOverview}
+                  tabIndex={isOverview ? 0 : -1}
                 >
                   <Icon className="h-5 w-5" />
                   {item.label}
                 </Link>
               );
             })}
-            <div className="border-t mt-2 pt-2">
+            <div className="border-t mt-2 pt-2 px-3">
               <ThemeToggle />
             </div>
           </nav>
         </div>
-      </div>
-    </div>
+      </SheetContent>
+    </Sheet>
   );
 }
