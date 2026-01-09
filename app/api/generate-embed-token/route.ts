@@ -9,8 +9,8 @@ import {
 const API_KEY_HEADER = "x-api-key";
 
 const requestSchema = z.object({
-  tenantId: z.string().min(1),
-  userId: z.string().min(1),
+  uniqueKey: z.string().min(1),
+  userId: z.string().min(1).optional(),
   permissions: z.array(z.string()).default([]),
 });
 
@@ -34,9 +34,9 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json();
-    const { tenantId, userId, permissions } = requestSchema.parse(body);
+    const { uniqueKey, userId, permissions } = requestSchema.parse(body);
 
-    const token = await signEmbedToken({ tenantId, userId, permissions });
+    const token = await signEmbedToken({ uniqueKey, userId, permissions });
     const embedUrl = buildEmbedUrl(token);
 
     return NextResponse.json({

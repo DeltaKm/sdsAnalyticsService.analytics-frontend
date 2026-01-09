@@ -8,8 +8,8 @@ import {
 export { EMBED_SESSION_COOKIE, EMBED_TOKEN_TTL_SECONDS } from "./constants";
 
 export type EmbedTokenClaims = {
-  tenantId: string;
-  userId: string;
+  uniqueKey: string;
+  userId?: string;
   permissions: string[];
 };
 
@@ -33,7 +33,7 @@ function getSecretKey(): Uint8Array {
 }
 
 export async function signEmbedToken({
-  tenantId,
+  uniqueKey,
   userId,
   permissions,
   expiresInSeconds = EMBED_TOKEN_TTL_SECONDS,
@@ -41,8 +41,9 @@ export async function signEmbedToken({
   const secret = getSecretKey();
   const issuedAt = Math.floor(Date.now() / 1000);
   const expirationTime = issuedAt + expiresInSeconds;
+  const resolvedUser = userId ?? "embed-user";
 
-  return await new SignJWT({ tenantId, userId, permissions })
+  return await new SignJWT({ uniqueKey, userId: resolvedUser, permissions })
     .setProtectedHeader({ alg: EMBED_JWT_ALGORITHM, typ: "JWT" })
     .setIssuedAt(issuedAt)
     .setExpirationTime(expirationTime)
@@ -59,14 +60,17 @@ export async function verifyEmbedToken(token: string): Promise<EmbedSession> {
     throw new Error("Invalid embed token payload");
   }
 
-  const { tenantId, userId, permissions } = payload as Partial<EmbedSession>;
+  const { uniqueKey, userId, permissions } = payload as Partial<EmbedSession>;
 
   if (
-    typeof tenantId !== "string" ||
-    typeof userId !== "string" ||
+    typeof uniqueKey !== "string" ||
     !Array.isArray(permissions)
   ) {
     throw new Error("Embed token missing required claims");
+  }
+
+  if (userId !== undefined && typeof userId !== "string") {
+    throw new Error("Embed token userId must be a string if provided");
   }
 
   return payload as EmbedSession;

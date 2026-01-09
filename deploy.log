@@ -1,30 +1,30 @@
 ==== DEPLOY FRONTEND INIZIATO ====
-Data: Mon Jan  5 17:06:22 CET 2026
-Nuova versione: v1.5.0
+Data: Mon Jan  5 17:35:53 CET 2026
+Nuova versione: v1.6.0
 Cloud Build: build & push immagine...
-Creating temporary archive of 97 file(s) totalling 483.1 KiB before compression.
+Creating temporary archive of 97 file(s) totalling 482.7 KiB before compression.
 Some files were not included in the source upload.
 
-Check the gcloud log [/Users/claudiomartinez/.config/gcloud/logs/2026.01.05/17.06.24.420235.log] to see which files and the contents of the
+Check the gcloud log [/Users/claudiomartinez/.config/gcloud/logs/2026.01.05/17.35.55.102060.log] to see which files and the contents of the
 default gcloudignore file used (see `$ gcloud topic gcloudignore` to learn
 more).
 
-Uploading tarball of [.] to [gs://sdsanalyticsservice_cloudbuild/source/1767629184.736154-1a02d521526e43dabd880e64ad0a0ef5.tgz]
-Created [https://cloudbuild.googleapis.com/v1/projects/sdsanalyticsservice/locations/global/builds/a89a99a9-6bc0-4c59-9bdb-16189424b2c6].
-Logs are available at [ https://console.cloud.google.com/cloud-build/builds/a89a99a9-6bc0-4c59-9bdb-16189424b2c6?project=542854471096 ].
+Uploading tarball of [.] to [gs://sdsanalyticsservice_cloudbuild/source/1767630955.22594-45d9b296e42c4369845c257502613b71.tgz]
+Created [https://cloudbuild.googleapis.com/v1/projects/sdsanalyticsservice/locations/global/builds/2863f0d7-c5cc-4162-b4ae-ebccf37840b7].
+Logs are available at [ https://console.cloud.google.com/cloud-build/builds/2863f0d7-c5cc-4162-b4ae-ebccf37840b7?project=542854471096 ].
 Waiting for build to complete. Polling interval: 1 second(s).
------------------------------------------ REMOTE BUILD OUTPUT -----------------------------------------
-starting build "a89a99a9-6bc0-4c59-9bdb-16189424b2c6"
+-------------------------------------------------------------- REMOTE BUILD OUTPUT ---------------------------------------------------------------
+starting build "2863f0d7-c5cc-4162-b4ae-ebccf37840b7"
 
 FETCHSOURCE
-Fetching storage object: gs://sdsanalyticsservice_cloudbuild/source/1767629184.736154-1a02d521526e43dabd880e64ad0a0ef5.tgz#1767629185880883
-Copying gs://sdsanalyticsservice_cloudbuild/source/1767629184.736154-1a02d521526e43dabd880e64ad0a0ef5.tgz#1767629185880883...
-/ [0 files][    0.0 B/110.0 KiB]                                                / [1 files][110.0 KiB/110.0 KiB]                                                
-Operation completed over 1 objects/110.0 KiB.
+Fetching storage object: gs://sdsanalyticsservice_cloudbuild/source/1767630955.22594-45d9b296e42c4369845c257502613b71.tgz#1767630956358168
+Copying gs://sdsanalyticsservice_cloudbuild/source/1767630955.22594-45d9b296e42c4369845c257502613b71.tgz#1767630956358168...
+/ [0 files][    0.0 B/109.9 KiB]                                                / [1 files][109.9 KiB/109.9 KiB]                                                
+Operation completed over 1 objects/109.9 KiB.
 BUILD
 Starting Step #0
 Step #0: Already have image (with digest): gcr.io/cloud-builders/docker
-Step #0: Sending build context to Docker daemon  587.3kB
+Step #0: Sending build context to Docker daemon  586.8kB
 Step #0: Step 1/18 : FROM node:20-alpine AS builder
 Step #0: 20-alpine: Pulling from library/node
 Step #0: 1074353eec0d: Pulling fs layer
@@ -47,34 +47,31 @@ Step #0: Digest: sha256:658d0f63e501824d6c23e06d4bb95c71e7d704537c9d9272f488ac03
 Step #0: Status: Downloaded newer image for node:20-alpine
 Step #0:  ---> e80b0510ba94
 Step #0: Step 2/18 : WORKDIR /app
-Step #0:  ---> Running in d449cf02f29a
-Step #0: Removing intermediate container d449cf02f29a
-Step #0:  ---> 76929e7e9bed
+Step #0:  ---> Running in 5620f06badfc
+Step #0: Removing intermediate container 5620f06badfc
+Step #0:  ---> a088866b2989
 Step #0: Step 3/18 : RUN apk add --no-cache libc6-compat
-Step #0:  ---> Running in ccd88d4da686
+Step #0:  ---> Running in e3b5c2dd15b5
 Step #0: (1/3) Installing musl-obstack (1.2.3-r2)
 Step #0: (2/3) Installing libucontext (1.3.3-r0)
 Step #0: (3/3) Installing gcompat (1.1.0-r4)
 Step #0: OK: 11.0 MiB in 21 packages
-Step #0: Removing intermediate container ccd88d4da686
-Step #0:  ---> b1e82945bdac
+Step #0: Removing intermediate container e3b5c2dd15b5
+Step #0:  ---> 5bb201f6f892
 Step #0: Step 4/18 : COPY package*.json ./
-Step #0:  ---> 78004f57be52
+Step #0:  ---> 59f94de8d10f
 Step #0: Step 5/18 : RUN npm install
-Step #0:  ---> Running in 2c6ed3f981e5
+Step #0:  ---> Running in cde6f9f054e3
 Step #0: 
-Step #0: added 452 packages, and audited 453 packages in 31s
+Step #0: added 452 packages, and audited 453 packages in 26s
 Step #0: 
 Step #0: 153 packages are looking for funding
 Step #0:   run `npm fund` for details
 Step #0: 
-Step #0: 2 vulnerabilities (1 moderate, 1 critical)
-Step #0: 
-Step #0: To address issues that do not require attention, run:
-Step #0:   npm audit fix
+Step #0: 1 moderate severity vulnerability
 Step #0: 
 Step #0: To address all issues, run:
-Step #0:   npm audit fix --force
+Step #0:   npm audit fix
 Step #0: 
 Step #0: Run `npm audit` for details.
 Step #0: [91mnpm notice
@@ -82,186 +79,178 @@ Step #0: npm notice New major version of npm available! 10.8.2 -> 11.7.0
 Step #0: npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
 Step #0: npm notice To update run: npm install -g npm@11.7.0
 Step #0: npm notice
-Step #0: [0mRemoving intermediate container 2c6ed3f981e5
-Step #0:  ---> b19139d6839d
+Step #0: [0mRemoving intermediate container cde6f9f054e3
+Step #0:  ---> 5f2e6c996c1c
 Step #0: Step 6/18 : COPY . .
-Step #0:  ---> 89041cb1117a
+Step #0:  ---> 72e9e1b790fb
 Step #0: Step 7/18 : RUN npm run build
-Step #0:  ---> Running in dd4f2d43509c
+Step #0:  ---> Running in 6f4956952d8e
 Step #0: 
 Step #0: > analytics-frontend@0.1.0 build
-Step #0: > next build --turbopack
+Step #0: > next build
 Step #0:
 Step #0: Attention: Next.js now collects completely anonymous telemetry regarding usage.
 Step #0: This information is used to shape Next.js' roadmap and prioritize features.
 Step #0: You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
 Step #0: https://nextjs.org/telemetry
 Step #0: 
-Step #0:    ▲ Next.js 15.5.6 (Turbopack)
+Step #0:    ▲ Next.js 15.5.9
 Step #0:    - Experiments (use with caution):
 Step #0:      · serverActions
 Step #0: 
 Step #0:    Creating an optimized production build ...
-Step #0:  ✓ Finished writing to disk in 56ms
-Step #0:  ✓ Compiled successfully in 48s
+Step #0:  ✓ Compiled successfully in 49s
 Step #0:    Linting and checking validity of types ...
 Step #0:    Collecting page data ...
 Step #0:    Generating static pages (0/8) ...
-Step #0:    Generating static pages (2/8) 
+Step #0:    Generating static pages (2/8)
 Step #0:    Generating static pages (4/8) 
 Step #0:    Generating static pages (6/8) 
 Step #0:  ✓ Generating static pages (8/8)
 Step #0:    Finalizing page optimization ...
 Step #0:    Collecting build traces ...
 Step #0: 
-Step #0: Route (app)                         Size  First Load JS
-Step #0: ┌ ○ /                                0 B         115 kB
-Step #0: ├ ○ /_not-found                      0 B         115 kB
-Step #0: ├ ƒ /advanced-report             2.14 kB         228 kB
-Step #0: ├ ƒ /api/generate-embed-token        0 B            0 B
-Step #0: ├ ƒ /api/health                      0 B            0 B
-Step #0: ├ ƒ /api/trpc/[trpc]                 0 B            0 B
-Step #0: ├ ƒ /catalog                     6.33 kB         341 kB
-Step #0: ├ ƒ /channels                     1.6 kB         336 kB
-Step #0: ├ ƒ /customers                   1.24 kB         228 kB
-Step #0: ├ ƒ /dashboard                       0 B         342 kB
-Step #0: ├ ƒ /dashboard/overview              0 B         342 kB
-Step #0: ├ ƒ /devices                      1.6 kB         336 kB
-Step #0: ├ ○ /embed                         266 B         115 kB
-Step #0: ├ ƒ /operators                   6.35 kB         341 kB
-Step #0: ├ ƒ /overview                        0 B         342 kB
-Step #0: ├ ƒ /sales                       6.67 kB         341 kB
-Step #0: └ ƒ /time-slots                   119 kB         346 kB
-Step #0: + First Load JS shared by all     123 kB
-Step #0:   ├ chunks/2468949c4832742b.js   59.2 kB
-Step #0:   ├ chunks/5a50ee1d1bd5f6b0.js   10.9 kB
-Step #0:   ├ chunks/75a3f12660976f11.js     13 kB
-Step #0:   ├ chunks/c490e204b33dc39d.js   17.2 kB
-Step #0:   └ other shared chunks (total)  22.8 kB
+Step #0: Route (app)                                 Size  First Load JS
+Step #0: ┌ ○ /                                      134 B         102 kB
+Step #0: ├ ○ /_not-found                            996 B         103 kB
+Step #0: ├ ƒ /advanced-report                     2.13 kB         189 kB
+Step #0: ├ ƒ /api/generate-embed-token              134 B         102 kB
+Step #0: ├ ƒ /api/health                            134 B         102 kB
+Step #0: ├ ƒ /api/trpc/[trpc]                       134 B         102 kB
+Step #0: ├ ƒ /catalog                             1.26 kB         302 kB
+Step #0: ├ ƒ /channels                            2.23 kB         297 kB
+Step #0: ├ ƒ /customers                           1.23 kB         188 kB
+Step #0: ├ ƒ /dashboard                             142 B         315 kB
+Step #0: ├ ƒ /dashboard/overview                    142 B         315 kB
+Step #0: ├ ƒ /devices                             2.25 kB         297 kB
+Step #0: ├ ○ /embed                                 360 B         102 kB
+Step #0: ├ ƒ /operators                           1.27 kB         302 kB
+Step #0: ├ ƒ /overview                              142 B         315 kB
+Step #0: ├ ƒ /sales                               1.61 kB         302 kB
+Step #0: └ ƒ /time-slots                           1.8 kB         307 kB
+Step #0: + First Load JS shared by all             102 kB
+Step #0:   ├ chunks/255-dc5f45a243dc3a80.js       45.6 kB
+Step #0:   ├ chunks/4bd1b696-409494caf8c83275.js  54.2 kB
+Step #0:   └ other shared chunks (total)          1.94 kB
 Step #0: 
 Step #0: 
-Step #0: ƒ Middleware                     44.3 kB
+Step #0: ƒ Middleware                             39.5 kB
 Step #0: 
 Step #0: ○  (Static)   prerendered as static content
 Step #0: ƒ  (Dynamic)  server-rendered on demand
 Step #0:
-Step #0: Removing intermediate container dd4f2d43509c
-Step #0:  ---> d7bfcc8ac5f4
+Step #0: Removing intermediate container 6f4956952d8e
+Step #0:  ---> f45f27baa4e3
 Step #0: Step 8/18 : FROM node:20-alpine AS runner
 Step #0:  ---> e80b0510ba94
 Step #0: Step 9/18 : WORKDIR /app
 Step #0:  ---> Using cache
-Step #0:  ---> 76929e7e9bed
+Step #0:  ---> a088866b2989
 Step #0: Step 10/18 : ENV NODE_ENV=production
-Step #0:  ---> Running in a93f52d91588
-Step #0: Removing intermediate container a93f52d91588
-Step #0:  ---> 21489f5f4159
+Step #0:  ---> Running in 9a025d4f5459
+Step #0: Removing intermediate container 9a025d4f5459
+Step #0:  ---> 785ef86c8ee8
 Step #0: Step 11/18 : ENV PORT=8080
-Step #0:  ---> Running in 2de4aeae7730
-Step #0: Removing intermediate container 2de4aeae7730
-Step #0:  ---> b366c7298b84
+Step #0:  ---> Running in b0a552b6ac59
+Step #0: Removing intermediate container b0a552b6ac59
+Step #0:  ---> aaac199067f8
 Step #0: Step 12/18 : COPY package*.json ./
-Step #0:  ---> c22f9f730706
+Step #0:  ---> 7a280cb3a6e3
 Step #0: Step 13/18 : RUN npm install --omit=dev
-Step #0:  ---> Running in 8f616b04b892
+Step #0:  ---> Running in cb661a1e80df
 Step #0: 
-Step #0: added 149 packages, and audited 150 packages in 23s
+Step #0: added 149 packages, and audited 150 packages in 20s
 Step #0: 
 Step #0: 22 packages are looking for funding
 Step #0:   run `npm fund` for details
 Step #0: 
-Step #0: 1 critical severity vulnerability
-Step #0: 
-Step #0: To address all issues, run:
-Step #0:   npm audit fix --force
-Step #0: 
-Step #0: Run `npm audit` for details.
+Step #0: found 0 vulnerabilities
 Step #0: [91mnpm notice
 Step #0: npm notice New major version of npm available! 10.8.2 -> 11.7.0
 Step #0: npm notice Changelog: https://github.com/npm/cli/releases/tag/v11.7.0
 Step #0: npm notice To update run: npm install -g npm@11.7.0
 Step #0: npm notice
-Step #0: [0mRemoving intermediate container 8f616b04b892
-Step #0:  ---> 8d306c251224
+Step #0: [0mRemoving intermediate container cb661a1e80df
+Step #0:  ---> ad29fb7b8a71
 Step #0: Step 14/18 : COPY --from=builder /app/.next/standalone ./
-Step #0:  ---> 59b171e3a4c4
+Step #0:  ---> 6b30057dbc0d
 Step #0: Step 15/18 : COPY --from=builder /app/.next/static ./.next/static
-Step #0:  ---> 2d5f3d7510a9
+Step #0:  ---> 03a775ee5121
 Step #0: Step 16/18 : COPY --from=builder /app/public ./public
-Step #0:  ---> b8ed5cc17d63
+Step #0:  ---> 3cc95045c27b
 Step #0: Step 17/18 : EXPOSE 8080
-Step #0:  ---> Running in a8f38bb86d6d
-Step #0: Removing intermediate container a8f38bb86d6d
-Step #0:  ---> 8a604448b40f
+Step #0:  ---> Running in 830eb1f3367a
+Step #0: Removing intermediate container 830eb1f3367a
+Step #0:  ---> d54202dd18ea
 Step #0: Step 18/18 : CMD ["node", "server.js"]
-Step #0:  ---> Running in c91de173ba43
-Step #0: Removing intermediate container c91de173ba43
-Step #0:  ---> d53f4bde368c
-Step #0: Successfully built d53f4bde368c
-Step #0: Successfully tagged europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.5.0
+Step #0:  ---> Running in 82fc2ddb95e5
+Step #0: Removing intermediate container 82fc2ddb95e5
+Step #0:  ---> a4d011c8b24c
+Step #0: Successfully built a4d011c8b24c
+Step #0: Successfully tagged europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.6.0
 Finished Step #0
 Starting Step #1
 Step #1: Already have image (with digest): gcr.io/cloud-builders/docker
 Step #1: The push refers to repository [europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend]
-Step #1: 57bb87813fc1: Preparing
-Step #1: 4564065f1394: Preparing
-Step #1: 269996a01d8e: Preparing
-Step #1: 116f1d448886: Preparing
-Step #1: d98124d6458a: Preparing
-Step #1: 0a9d6867c6a0: Preparing
+Step #1: 41080471619b: Preparing
+Step #1: 34ceba9f6bfd: Preparing
+Step #1: b6919db4e0b4: Preparing
+Step #1: 1fae3320ab00: Preparing
+Step #1: 391a18b245d3: Preparing
+Step #1: 95e07520e638: Preparing
 Step #1: 6be78693c259: Preparing
 Step #1: 571b9a150b87: Preparing
 Step #1: c7e70c519c8c: Preparing
 Step #1: 7bb20cf5ef67: Preparing
-Step #1: c7e70c519c8c: Layer already exists
-Step #1: 6be78693c259: Layer already exists
 Step #1: 571b9a150b87: Layer already exists
+Step #1: 6be78693c259: Layer already exists
 Step #1: 7bb20cf5ef67: Layer already exists
-Step #1: 57bb87813fc1: Pushed
-Step #1: 0a9d6867c6a0: Pushed
-Step #1: d98124d6458a: Pushed
-Step #1: 4564065f1394: Pushed
-Step #1: 269996a01d8e: Pushed
-Step #1: 116f1d448886: Pushed
-Step #1: v1.5.0: digest: sha256:78d31e3ed67b91fb2f097fd0b039662ec226b38eec87b829b49ebba1804743ba size: 2417
+Step #1: c7e70c519c8c: Layer already exists
+Step #1: 391a18b245d3: Pushed
+Step #1: 95e07520e638: Pushed
+Step #1: 41080471619b: Pushed
+Step #1: 34ceba9f6bfd: Pushed
+Step #1: b6919db4e0b4: Pushed
+Step #1: 1fae3320ab00: Pushed
+Step #1: v1.6.0: digest: sha256:2759b2a28d7f695d471868edc7278a927d1bc3d9f5acd064ef689b3119e94786 size: 2417
 Finished Step #1
 PUSH
-Pushing europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.5.0
+Pushing europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.6.0
 The push refers to repository [europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend]
-57bb87813fc1: Preparing
-4564065f1394: Preparing
-269996a01d8e: Preparing
-116f1d448886: Preparing
-d98124d6458a: Preparing
-0a9d6867c6a0: Preparing
+41080471619b: Preparing
+34ceba9f6bfd: Preparing
+b6919db4e0b4: Preparing
+1fae3320ab00: Preparing
+391a18b245d3: Preparing
+95e07520e638: Preparing
 6be78693c259: Preparing
 571b9a150b87: Preparing
 c7e70c519c8c: Preparing
 7bb20cf5ef67: Preparing
-0a9d6867c6a0: Layer already exists
-571b9a150b87: Layer already exists
-4564065f1394: Layer already exists
-6be78693c259: Layer already exists
-269996a01d8e: Layer already exists
-7bb20cf5ef67: Layer already exists
-116f1d448886: Layer already exists
-57bb87813fc1: Layer already exists
 c7e70c519c8c: Layer already exists
-d98124d6458a: Layer already exists
-v1.5.0: digest: sha256:78d31e3ed67b91fb2f097fd0b039662ec226b38eec87b829b49ebba1804743ba size: 2417
+391a18b245d3: Layer already exists
+7bb20cf5ef67: Layer already exists
+6be78693c259: Layer already exists
+1fae3320ab00: Layer already exists
+571b9a150b87: Layer already exists
+34ceba9f6bfd: Layer already exists
+b6919db4e0b4: Layer already exists
+95e07520e638: Layer already exists
+41080471619b: Layer already exists
+v1.6.0: digest: sha256:2759b2a28d7f695d471868edc7278a927d1bc3d9f5acd064ef689b3119e94786 size: 2417
 DONE
--------------------------------------------------------------------------------------------------------
-ID                                    CREATE_TIME                DURATION  SOURCE                                                                                             IMAGES                                                                                   STATUS
-a89a99a9-6bc0-4c59-9bdb-16189424b2c6  2026-01-05T16:06:26+00:00  4M42S     gs://sdsanalyticsservice_cloudbuild/source/1767629184.736154-1a02d521526e43dabd880e64ad0a0ef5.tgz  europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.5.0  SUCCESS
-Old revision: analytics-frontend-00015-jxf
+--------------------------------------------------------------------------------------------------------------------------------------------------
+ID                                    CREATE_TIME                DURATION  SOURCE                                                                                            IMAGES                                                                                   STATUS
+2863f0d7-c5cc-4162-b4ae-ebccf37840b7  2026-01-05T16:35:57+00:00  4M42S     gs://sdsanalyticsservice_cloudbuild/source/1767630955.22594-45d9b296e42c4369845c257502613b71.tgz  europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.6.0  SUCCESS
+Old revision: analytics-frontend-00016-vtq
 Deploy Cloud Run...
 Deploying container to Cloud Run service [[1manalytics-frontend[m] in project [[1msdsanalyticsservice[m] region [[1meurope-west1[m]
 Deploying...
-Setting IAM Policy................done
-Creating Revision........................................................................................................................................................................................................................................................................................................................................................................................................................................................................done
+Setting IAM Policy.................done
+Creating Revision...........................................................................................................................................................................................................................................................................................................................................................................done
 Routing traffic.....done
 Done.
-Service [[1manalytics-frontend[m] revision [[1manalytics-frontend-00016-vtq[m] has been deployed and is serving [1m100[m percent of traffic.
+Service [[1manalytics-frontend[m] revision [[1manalytics-frontend-00017-m4b[m] has been deployed and is serving [1m100[m percent of traffic.
 Service URL: [1mhttps://analytics-frontend-542854471096.europe-west1.run.app[m
 Health check...
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -269,8 +258,8 @@ Health check...
   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    15    0    15    0     0     13      0 --:--:--  0:00:01 --:--:--    13100    15    0    15    0     0     13      0 --:--:--  0:00:01 --:--:--    13
 {"status":"ok"}[SUCCESS] Deploy analytics-frontend riuscito
 Ref: refs/heads/main
-Commit: 43c9ca8 - ui: mobile menu sticky layout fixes
-Immagine: europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.5.0
-Durata: 5m59s
+Commit: d697037 - fix: vuln 03-01-26
+Immagine: europe-west1-docker.pkg.dev/sdsanalyticsservice/frontend-repo/analytics-frontend:v1.6.0
+Durata: 5m49s
 Dettagli: https://console.cloud.google.com/run/detail/europe-west1/analytics-frontend?project=sdsanalyticsservice
-Fine deploy frontend v1.5.0
+Fine deploy frontend v1.6.0
