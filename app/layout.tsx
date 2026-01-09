@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Risto Analytics",
-  description: "Dashboard analytics per ristorazione multi-negozio",
+  description: "Dashboard",
 };
 
 export default function RootLayout({
