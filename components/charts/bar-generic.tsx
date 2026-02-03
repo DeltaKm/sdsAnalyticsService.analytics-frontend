@@ -12,14 +12,14 @@ type BarGenericProps = {
 };
 
 const COLORS = [
-  "#8b5cf6",
+  "#8bc63e",
   "#06b6d4",
   "#f59e0b",
-  "#ec4899",
   "#10b981",
-  "#6366f1",
+  "#14b8a6",
   "#f97316",
-  "#14b8a6"
+  "#6366f1",
+  "#ec4899"
 ];
 
 export function BarGeneric({ series, xLabel, yLabel, stacked }: BarGenericProps) {

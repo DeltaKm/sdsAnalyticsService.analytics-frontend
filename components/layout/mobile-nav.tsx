@@ -85,9 +85,9 @@ export function MobileNav() {
                   className={cn(
                     "relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
                     !isOverview && "cursor-not-allowed opacity-80",
-                    isActive 
-                      ? "bg-slate-100 text-slate-900 dark:bg-[#7c3aed] dark:text-white" 
-                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-[#7c3aed] dark:hover:text-white",
+                    isActive
+                      ? "bg-slate-100 text-slate-900 dark:bg-[#8bc63e] dark:text-white"
+                      : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-[hsl(var(--foreground))] dark:hover:bg-[#79ab38] dark:hover:text-white",
                     !isOverview && !isActive && "hover:bg-transparent hover:text-slate-600 dark:hover:bg-transparent dark:hover:text-slate-400"
                   )}
                   onClick={(e) => {

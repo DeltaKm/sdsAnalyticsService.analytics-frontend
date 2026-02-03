@@ -25,25 +25,26 @@
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
+    /* Host palette alignment (dark) */
+    --background: 0 0% 22%; /* ~#383838 */
+    --foreground: 36 56% 86%; /* ~#ecdfcc */
+    --card: 0 0% 22%;
+    --card-foreground: 36 56% 86%;
+    --popover: 0 0% 22%;
+    --popover-foreground: 36 56% 86%;
+    --primary: 86 54% 51%; /* #8bc63e */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 86 41% 43%; /* #79ab38 (hover/alt) */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 27%; /* ~#454545 */
+    --muted-foreground: 36 40% 78%; /* ~#d8c9b0 */
+    --accent: 86 41% 43%;
+    --accent-foreground: 0 0% 100%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    --border: 0 0% 32%; /* ~#525252 */
+    --input: 0 0% 32%;
+    --ring: 86 54% 51%;
   }
 }
 
@@ -57,4 +58,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
 }

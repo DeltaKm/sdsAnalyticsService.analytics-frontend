@@ -11,14 +11,14 @@ type LineGenericProps = {
 };
 
 const COLORS = [
-  "#8b5cf6",
-  "#06b6d4", 
+  "#8bc63e",
+  "#06b6d4",
   "#f59e0b",
-  "#ec4899",
   "#10b981",
-  "#6366f1",
+  "#14b8a6",
   "#f97316",
-  "#14b8a6"
+  "#6366f1",
+  "#ec4899"
 ];
 
 export function LineGeneric({ series, xLabel, yLabel }: LineGenericProps) {
