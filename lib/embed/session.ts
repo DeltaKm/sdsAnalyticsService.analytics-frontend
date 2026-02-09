@@ -60,20 +60,18 @@ export async function verifyEmbedToken(token: string): Promise<EmbedSession> {
     throw new Error("Invalid embed token payload");
   }
 
-  const { uniqueKey, userId, permissions } = payload as Partial<EmbedSession>;
-
-  if (
-    typeof uniqueKey !== "string" ||
-    !Array.isArray(permissions)
-  ) {
-    throw new Error("Embed token missing required claims");
+  const { uniqueKey, userId, permissions, iat, exp } = payload as any;
+  if (!uniqueKey || !permissions || iat === undefined || exp === undefined) {
+    throw new Error("Missing required token claims");
   }
 
-  if (userId !== undefined && typeof userId !== "string") {
-    throw new Error("Embed token userId must be a string if provided");
-  }
-
-  return payload as EmbedSession;
+  return {
+    uniqueKey,
+    userId,
+    permissions,
+    iat,
+    exp,
+  };
 }
 
 export async function tryVerifyEmbedToken(

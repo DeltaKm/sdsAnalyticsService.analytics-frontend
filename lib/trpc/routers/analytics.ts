@@ -1,7 +1,9 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { cookies } from "next/headers";
 import type { AnalyticsResponse } from "@/lib/types";
 import { publicProcedure, createTRPCRouter } from "../trpc";
+import { EMBED_SESSION_COOKIE } from "@/lib/embed/session";
 
 const analyticsQuerySchema = z.object({
   from: z.string().datetime().optional(),
@@ -25,9 +27,17 @@ export const analyticsRouter = createTRPCRouter({
 
       const url = `${baseUrl.replace(/\/$/, "")}/api/analytics/sales/overview?${search.toString()}`;
 
+      const cookieStore = await cookies();
+      const token = cookieStore.get(EMBED_SESSION_COOKIE)?.value ?? null;
+
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
       const res = await fetch(url, {
         cache: "no-store",
-        headers: { "Content-Type": "application/json" },
+        headers,
       });
 
       if (!res.ok) {

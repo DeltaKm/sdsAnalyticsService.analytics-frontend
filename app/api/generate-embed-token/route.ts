@@ -16,45 +16,39 @@ const requestSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    const expectedKey = process.env.EMBED_API_KEY;
-    if (!expectedKey) {
-      console.error("EMBED_API_KEY env var is not configured");
-      return NextResponse.json(
-        { message: "Server misconfiguration" },
-        { status: 500 },
-      );
-    }
-
-    const providedKey = request.headers.get(API_KEY_HEADER);
-    if (providedKey !== expectedKey) {
-      return NextResponse.json(
-        { message: "Unauthorized" },
-        { status: 401 },
-      );
-    }
-
     const body = await request.json();
-    const { uniqueKey, userId, permissions } = requestSchema.parse(body);
-
-    const token = await signEmbedToken({ uniqueKey, userId, permissions });
-    const embedUrl = buildEmbedUrl(token);
-
-    return NextResponse.json({
-      embedUrl,
-      expiresIn: EMBED_TOKEN_TTL_SECONDS,
-    });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
+    const dataServiceUrl = process.env.DATA_SERVICE_BASE_URL;
+    
+    if (!dataServiceUrl) {
       return NextResponse.json(
-        { message: "Invalid request payload", issues: error.issues },
-        { status: 400 },
+        { error: "DATA_SERVICE_BASE_URL is not configured" },
+        { status: 500 }
       );
     }
 
-    console.error("Failed to generate embed token", error);
+    const response = await fetch(`${dataServiceUrl}/api/generate-embed-token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      return NextResponse.json(
+        { error: `Data service error: ${response.status} ${errorText}` },
+        { status: response.status }
+      );
+    }
+
+    const data = await response.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("Failed to proxy embed token generation:", error);
     return NextResponse.json(
-      { message: "Failed to generate embed token" },
-      { status: 500 },
+      { error: "Failed to generate embed token" },
+      { status: 500 }
     );
   }
 }
