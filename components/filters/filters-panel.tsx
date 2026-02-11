@@ -117,19 +117,22 @@ function FiltersContent({
           </div>
           <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${openSections.date ? 'rotate-180' : ''}`} />
         </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-3 pt-2">
-          <div className="flex flex-wrap gap-1">
-            {shortcuts.map((shortcut) => (
-              <Button
-                key={shortcut.label}
-                variant="outline"
-                size="sm"
-                className="h-7 text-xs"
-                onClick={shortcut.action}
-              >
-                {shortcut.label}
-              </Button>
-            ))}
+        <CollapsibleContent className="space-y-4 pt-3">
+          <div className="space-y-2">
+            <Label className="text-xs font-medium text-muted-foreground">Scorciatoie</Label>
+            <div className="flex flex-wrap gap-2">
+              {shortcuts.map((shortcut) => (
+                <Button
+                  key={shortcut.label}
+                  variant="secondary"
+                  size="sm"
+                  className="h-8 px-3 text-xs font-medium rounded-full hover:bg-primary hover:text-primary-foreground transition-colors"
+                  onClick={shortcut.action}
+                >
+                  {shortcut.label}
+                </Button>
+              ))}
+            </div>
           </div>
           <DateTimeRange
             from={filters.from}

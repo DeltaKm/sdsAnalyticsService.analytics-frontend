@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useMemo, Suspense } from "react";
+import { useEffect, useMemo, Suspense, useState } from "react";
 import { SectionHeader } from "@/components/layout/section-header";
-import { FiltersPanel } from "@/components/filters/filters-panel";
+import { Button } from "@/components/ui/button";
 import { KpiCard } from "@/components/ui/kpi-card";
 import { ChartWrapper } from "@/components/charts/chart-wrapper";
 import { BarGeneric } from "@/components/charts/bar-generic";
@@ -28,6 +28,7 @@ type OverviewContentProps = {
 
 export function OverviewContent({ demoMode, demoFrom, demoTo }: OverviewContentProps) {
   const { filters, applyFilters, clearFilters, setFilters } = useDashboardFilters("/overview");
+  const [selectedPreset, setSelectedPreset] = useState<30 | 90 | 365 | null>(30);
 
   useEffect(() => {
     if (filters.from && filters.to) return;
@@ -79,21 +80,17 @@ export function OverviewContent({ demoMode, demoFrom, demoTo }: OverviewContentP
     return "Si è verificato un errore imprevisto.";
   }, [error]);
 
-  const handleApply = () => {
-    applyFilters();
-    refetch();
-  };
-
-  const handleClear = () => {
-    clearFilters();
-    if (demoMode && demoFrom && demoTo) {
-      setFilters({
-        from: demoFrom,
-        to: demoTo,
-        stores: [],
-      });
-    }
-    refetch();
+  const setPresetDays = (days: 30 | 90 | 365) => {
+    const end = new Date();
+    const start = new Date();
+    start.setDate(start.getDate() - days);
+    console.log(`[Overview] Setting preset: ${days} days`, { from: start.toISOString(), to: end.toISOString() });
+    setSelectedPreset(days);
+    setFilters({
+      from: start.toISOString(),
+      to: end.toISOString(),
+      stores: [],
+    });
   };
 
   const columns: ColumnDef<any>[] =
@@ -114,7 +111,35 @@ export function OverviewContent({ demoMode, demoFrom, demoTo }: OverviewContentP
   return (
     <div className="space-y-6">
       <SectionHeader title="Panoramica">
-        <FiltersPanel onApply={handleApply} onClear={handleClear} disabled={demoMode} />
+        <div className="flex items-center gap-2">
+          <Button
+            variant={selectedPreset === 30 ? "default" : "outline"}
+            size="sm"
+            onClick={() => setPresetDays(30)}
+            disabled={demoMode}
+            className="h-8 px-3 text-xs font-medium"
+          >
+            Ultimi 30 giorni
+          </Button>
+          <Button
+            variant={selectedPreset === 90 ? "default" : "outline"}
+            size="sm"
+            onClick={() => setPresetDays(90)}
+            disabled={demoMode}
+            className="h-8 px-3 text-xs font-medium"
+          >
+            Ultimi 90 giorni
+          </Button>
+          <Button
+            variant={selectedPreset === 365 ? "default" : "outline"}
+            size="sm"
+            onClick={() => setPresetDays(365)}
+            disabled={demoMode}
+            className="h-8 px-3 text-xs font-medium"
+          >
+            Ultimo anno
+          </Button>
+        </div>
         <CsvExport data={data?.table.rows || []} filename="overview.csv" disabled />
         <PrintButton disabled />
       </SectionHeader>
@@ -139,23 +164,19 @@ export function OverviewContent({ demoMode, demoFrom, demoTo }: OverviewContentP
                 <KpiCard label="Media Coperto" value={data.kpi.media_coperto || 0} />
               </div>
 
-              {data.chart.series.length > 0 && (
-                <div className="grid md:grid-cols-2 gap-4">
-                  <ChartWrapper title="Incasso per Tipo Documento">
-                    <BarGeneric series={data.chart.series} stacked />
-                  </ChartWrapper>
-                  <ChartWrapper title="Incasso per Orario">
-                    <LineGeneric series={data.chart.series} />
-                  </ChartWrapper>
-                </div>
-              )}
+              <div className="grid md:grid-cols-2 gap-4">
+                <ChartWrapper title="Incasso per Tipo Documento">
+                  <BarGeneric series={data.chart.series} stacked />
+                </ChartWrapper>
+                <ChartWrapper title="Incasso per Orario">
+                  <LineGeneric series={data.chart.series} />
+                </ChartWrapper>
+              </div>
 
-              {data.table.rows.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold mb-4">Dettaglio Vendite</h3>
-                  <DataTable columns={columns} data={data.table.rows} />
-                </div>
-              )}
+              <div>
+                <h3 className="text-lg font-semibold mb-4">Dettaglio Vendite</h3>
+                <DataTable columns={columns} data={data.table.rows} />
+              </div>
             </>
           )}
       </div>
