@@ -11,44 +11,49 @@ const analyticsQuerySchema = z.object({
   stores: z.array(z.string()).optional(),
 });
 
+async function fetchAnalytics(path: string, input: z.infer<typeof analyticsQuerySchema>): Promise<AnalyticsResponse> {
+  const baseUrl = process.env.DATA_SERVICE_BASE_URL;
+  if (!baseUrl) {
+    throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DATA_SERVICE_BASE_URL is not configured" });
+  }
+
+  const search = new URLSearchParams();
+  if (input.from) search.set("from", input.from);
+  if (input.to) search.set("to", input.to);
+  input.stores?.forEach((store) => search.append("stores", store));
+
+  const url = `${baseUrl.replace(/\/$/, "")}${path}?${search.toString()}`;
+
+  const cookieStore = await cookies();
+  const token = cookieStore.get(EMBED_SESSION_COOKIE)?.value ?? null;
+
+  const headers: Record<string, string> = { "Content-Type": "application/json" };
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  const res = await fetch(url, {
+    cache: "no-store",
+    headers,
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new TRPCError({
+      code: "BAD_GATEWAY",
+      message: `Data service error: ${res.status} ${text}`.trim(),
+    });
+  }
+
+  const data = (await res.json()) as AnalyticsResponse;
+  return data;
+}
+
 export const analyticsRouter = createTRPCRouter({
   overview: publicProcedure
     .input(analyticsQuerySchema)
-    .query(async ({ input }) => {
-      const baseUrl = process.env.DATA_SERVICE_BASE_URL;
-      if (!baseUrl) {
-        throw new TRPCError({ code: "INTERNAL_SERVER_ERROR", message: "DATA_SERVICE_BASE_URL is not configured" });
-      }
-
-      const search = new URLSearchParams();
-      if (input.from) search.set("from", input.from);
-      if (input.to) search.set("to", input.to);
-      input.stores?.forEach((store) => search.append("stores", store));
-
-      const url = `${baseUrl.replace(/\/$/, "")}/api/analytics/sales/overview?${search.toString()}`;
-
-      const cookieStore = await cookies();
-      const token = cookieStore.get(EMBED_SESSION_COOKIE)?.value ?? null;
-
-      const headers: Record<string, string> = { "Content-Type": "application/json" };
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
-
-      const res = await fetch(url, {
-        cache: "no-store",
-        headers,
-      });
-
-      if (!res.ok) {
-        const text = await res.text().catch(() => "");
-        throw new TRPCError({
-          code: "BAD_GATEWAY",
-          message: `Data service error: ${res.status} ${text}`.trim(),
-        });
-      }
-
-      const data = (await res.json()) as AnalyticsResponse;
-      return data;
-    }),
+    .query(async ({ input }) => fetchAnalytics("/api/analytics/sales/overview", input)),
+  venduto: publicProcedure
+    .input(analyticsQuerySchema)
+    .query(async ({ input }) => fetchAnalytics("/api/analytics/sales/venduto", input)),
 });

@@ -32,6 +32,8 @@ const navItems = [
   { href: "/advanced-report", label: "Report Avanzato", icon: FileText },
 ];
 
+const enabledRoutes = new Set(["/overview", "/sales"]);
+
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -74,33 +76,33 @@ export function MobileNav() {
             {navItems.map((item) => {
               const targetHref = withBase(item.href);
               const isActive = pathname === targetHref;
-              const isOverview = item.href === "/overview";
+              const isEnabled = enabledRoutes.has(item.href);
               const Icon = item.icon;
 
               return (
                 <Link
                   key={item.href}
                   href={targetHref}
-                  prefetch={isOverview}
+                  prefetch={isEnabled}
                   className={cn(
                     "relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
-                    !isOverview && "cursor-not-allowed opacity-80",
+                    !isEnabled && "cursor-not-allowed opacity-80",
                     isActive
                       ? "bg-slate-100 text-slate-900 dark:bg-[#8bc63e] dark:text-white"
                       : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-[hsl(var(--foreground))] dark:hover:bg-[#79ab38] dark:hover:text-white",
-                    !isOverview && !isActive && "hover:bg-transparent hover:text-slate-600 dark:hover:bg-transparent dark:hover:text-slate-400"
+                    !isEnabled && !isActive && "hover:bg-transparent hover:text-slate-600 dark:hover:bg-transparent dark:hover:text-slate-400"
                   )}
                   onClick={(e) => {
-                    if (!isOverview) {
+                    if (!isEnabled) {
                       e.preventDefault();
                       e.stopPropagation();
                       return;
                     }
                     setOpen(false);
                   }}
-                  role={isOverview ? "link" : "presentation"}
-                  aria-disabled={!isOverview}
-                  tabIndex={isOverview ? 0 : -1}
+                  role={isEnabled ? "link" : "presentation"}
+                  aria-disabled={!isEnabled}
+                  tabIndex={isEnabled ? 0 : -1}
                 >
                   <Icon className="h-5 w-5" />
                   {item.label}
