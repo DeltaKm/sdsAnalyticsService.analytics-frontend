@@ -27,7 +27,7 @@ export default async function DashboardLayout({ children }: Props) {
     );
   }
 
-  // Create minimal session - data-service will handle real validation
+  
   const session = {
     uniqueKey: "unknown",
     userId: "embed-user",

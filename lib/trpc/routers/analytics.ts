@@ -56,4 +56,13 @@ export const analyticsRouter = createTRPCRouter({
   venduto: publicProcedure
     .input(analyticsQuerySchema)
     .query(async ({ input }) => fetchAnalytics("/api/analytics/sales/venduto", input)),
+  catalogCategoriesTop: publicProcedure
+    .input(analyticsQuerySchema)
+    .query(async ({ input }) => fetchAnalytics("/api/analytics/catalog/categories-top", input)),
+  catalogProductsTop: publicProcedure
+    .input(analyticsQuerySchema)
+    .query(async ({ input }) => fetchAnalytics("/api/analytics/catalog/products-top", input)),
+  catalogByType: publicProcedure
+    .input(analyticsQuerySchema)
+    .query(async ({ input }) => fetchAnalytics("/api/analytics/catalog/by-type", input)),
 });

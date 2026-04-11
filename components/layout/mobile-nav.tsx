@@ -32,7 +32,7 @@ const navItems = [
   { href: "/advanced-report", label: "Report Avanzato", icon: FileText },
 ];
 
-const enabledRoutes = new Set(["/overview", "/sales"]);
+const enabledRoutes = new Set(["/overview", "/sales", "/catalog"]);
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);

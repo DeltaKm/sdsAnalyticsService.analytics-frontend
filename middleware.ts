@@ -20,7 +20,6 @@ export async function middleware(request: NextRequest) {
     return response;
   }
 
-  // Just store the token - data-service will verify it
   const isProduction = process.env.NODE_ENV === "production";
   const response = NextResponse.redirect(new URL("/dashboard", request.url));
   response.cookies.set({

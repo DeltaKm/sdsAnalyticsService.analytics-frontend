@@ -30,7 +30,7 @@ const navItems = [
   { href: "/advanced-report", label: "Report Avanzato", icon: FileText },
 ];
 
-const enabledRoutes = new Set(["/overview", "/sales"]);
+const enabledRoutes = new Set(["/overview", "/sales", "/catalog"]);
 
 export function AppSidebar() {
   const pathname = usePathname();
