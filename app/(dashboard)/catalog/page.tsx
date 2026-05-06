@@ -4,7 +4,7 @@ export const dynamic = "force-dynamic";
 
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { SectionHeader } from "@/components/layout/section-header";
-import { FiltersPanel } from "@/components/filters/filters-panel";
+import { Button } from "@/components/ui/button";
 import { KpiCard } from "@/components/ui/kpi-card";
 import { ChartWrapper } from "@/components/charts/chart-wrapper";
 import { BarGeneric } from "@/components/charts/bar-generic";
@@ -56,7 +56,8 @@ function CatalogFallback() {
 
 function CatalogContent() {
   const [activeTab, setActiveTab] = useState<TabValue>("categories");
-  const { filters, applyFilters, clearFilters, setFilters } = useDashboardFilters("/catalog");
+  const { filters, setFilters } = useDashboardFilters("/catalog");
+  const [selectedPreset, setSelectedPreset] = useState<30 | 90 | 365 | null>(30);
 
   useEffect(() => {
     if (filters.from && filters.to) return;
@@ -120,14 +121,17 @@ function CatalogContent() {
       }));
   }, [data, activeTab]);
 
-  const handleApply = () => {
-    applyFilters();
-    void activeQuery.refetch();
-  };
+  const setPresetDays = (days: 30 | 90 | 365) => {
+    const end = new Date();
+    const start = new Date();
+    start.setDate(start.getDate() - days);
 
-  const handleClear = () => {
-    clearFilters();
-    void activeQuery.refetch();
+    setSelectedPreset(days);
+    setFilters({
+      from: start.toISOString(),
+      to: end.toISOString(),
+      stores: [],
+    });
   };
 
   const columns: ColumnDef<any>[] =
@@ -148,7 +152,32 @@ function CatalogContent() {
   return (
     <div className="space-y-6">
       <SectionHeader title="Categorie e Prodotti">
-        <FiltersPanel onApply={handleApply} onClear={handleClear} />
+        <div className="flex items-center gap-2">
+          <Button
+            variant={selectedPreset === 30 ? "default" : "outline"}
+            size="sm"
+            onClick={() => setPresetDays(30)}
+            className="h-8 px-3 text-xs font-medium"
+          >
+            Ultimi 30 giorni
+          </Button>
+          <Button
+            variant={selectedPreset === 90 ? "default" : "outline"}
+            size="sm"
+            onClick={() => setPresetDays(90)}
+            className="h-8 px-3 text-xs font-medium"
+          >
+            Ultimi 90 giorni
+          </Button>
+          <Button
+            variant={selectedPreset === 365 ? "default" : "outline"}
+            size="sm"
+            onClick={() => setPresetDays(365)}
+            className="h-8 px-3 text-xs font-medium"
+          >
+            Ultimo anno
+          </Button>
+        </div>
         <CsvExport data={data?.table.rows || []} filename={`catalog-${activeTab}.csv`} disabled={!data} />
         <PrintButton disabled={!data} />
       </SectionHeader>
